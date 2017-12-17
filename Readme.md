@@ -23,6 +23,11 @@ The easiest way to use this library is to add a label to the status bar:
 This will replace the status bar with a label that shows the current frames per second
 the application manages to draw.
 
+You can remove the label any time later:
+
+
+    FPSCounter.hide()
+
 If you'd like more control on how to display the frames, you can create a private
 `FPSCounter` instance and set a delegate
 
