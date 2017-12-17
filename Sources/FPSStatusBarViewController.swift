@@ -86,10 +86,13 @@ internal class FPSStatusBarViewController: UIViewController, FPSCounterDelegate 
 
     // MARK: - Getting the shared status bar window
 
+    static var previouslyCreatedStatusBarWindow: UIWindow?
+    
     static var statusBarWindow: UIWindow = {
         let window = UIWindow()
         window.windowLevel = UIWindowLevelStatusBar
         window.rootViewController = FPSStatusBarViewController()
+        previouslyCreatedStatusBarWindow = window
         return window
     }()
 }
@@ -97,7 +100,7 @@ internal class FPSStatusBarViewController: UIViewController, FPSCounterDelegate 
 
 public extension FPSCounter {
 
-    // MARK: - Show FPS in the status bar
+    // MARK: - Show/Hide FPS in the status bar
 
     /// Add a label in the status bar that shows the applications current FPS.
     ///
@@ -120,5 +123,18 @@ public extension FPSCounter {
                 mode: mode ?? RunLoopMode.commonModes
             )
         }
+    }
+    
+    /// Removes the label that shows application current FPS from the status bar.
+    public class func hide() {
+        guard let window = FPSStatusBarViewController.previouslyCreatedStatusBarWindow else {
+            return
+        }
+        
+        if let controller = window.rootViewController as? FPSStatusBarViewController {
+            controller.fpsCounter.stopTracking()
+        }
+        
+        window.isHidden = true
     }
 }
