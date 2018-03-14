@@ -57,7 +57,7 @@ internal class FPSStatusBarViewController: UIViewController, FPSCounterDelegate 
         self.fpsCounter.delegate = self
     }
 
-    func updateStatusBarFrame(_ notification: Notification) {
+    @objc func updateStatusBarFrame(_ notification: Notification) {
         let application = notification.object as? UIApplication
         let frame = CGRect(x: 0.0, y: 0.0, width: application?.keyWindow?.bounds.width ?? 0.0, height: 20.0)
 
